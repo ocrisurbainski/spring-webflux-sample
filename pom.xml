@@ -20,6 +20,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<mapstruct.version>1.4.2.Final</mapstruct.version>
+		<springdoc-openapi-ui.version>1.6.9</springdoc-openapi-ui.version>
 	</properties>
 
 	<dependencies>
@@ -49,6 +50,19 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
 			<version>${mapstruct.version}</version>
+		</dependency>
+
+		<!-- Swagger -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc-openapi-ui.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-ui</artifactId>
+			<version>${springdoc-openapi-ui.version}</version>
 		</dependency>
 
 		<!-- dependencies of tests -->

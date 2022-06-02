@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cpf\": \"08789761910\",\r\n    \"nome\": \"Cristian Urbainski\",\r\n    \"dataNascimento\": \"1992-12-24\"\r\n}",
+							"raw": "{\r\n    \"cpf\": \"03272008047\",\r\n    \"nome\": \"Cristian Urbainski\",\r\n    \"dataNascimento\": \"1992-12-24\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -23,13 +23,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/people",
+							"raw": "http://localhost:8080/api/people",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"api",
 								"people"
 							]
 						}
@@ -43,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"6298bca9629a4b6710661f7d\",\r\n    \"cpf\": \"08789761910\",\r\n    \"nome\": \"Cristian Elder Urbainski\",\r\n    \"dataNascimento\": \"1992-12-24\"\r\n}",
+							"raw": "{\r\n    \"id\": \"6298bca9629a4b6710661f7d\",\r\n    \"cpf\": \"03272008047\",\r\n    \"nome\": \"Cristian Elder Urbainski\",\r\n    \"dataNascimento\": \"1992-12-24\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -51,13 +52,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/people",
+							"raw": "http://localhost:8080/api/people",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"api",
 								"people"
 							]
 						}
@@ -70,14 +72,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/people",
+							"raw": "http://localhost:8080/api/people/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"people"
+								"api",
+								"people",
+								"all"
 							]
 						}
 					},
@@ -89,15 +93,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/people/6298bca9629a4b6710661f7d",
+							"raw": "http://localhost:8080/api/people/6299029d29467e2ac57500da",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"api",
 								"people",
-								"6298bca9629a4b6710661f7d"
+								"6299029d29467e2ac57500da"
 							]
 						}
 					},

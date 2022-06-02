@@ -2,6 +2,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://${PEOPLE_USER:people-api}:${PEOPLE_PASSWORD:people-api-pass}@${PEOPLE_DB_HOST:localhost}:${PEOPLE_DB_PORT:27017}/${PEOPLE_DB_NAME:people_db}
+  webflux:
+    base-path: /api
 
 server:
   port: 8080
