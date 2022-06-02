@@ -8,4 +8,6 @@ public interface PeopleRestMapper {
 
     People toPeople(PeopleDTO dto);
 
+    PeopleDTO toPeopleDTO(People people);
+
 }

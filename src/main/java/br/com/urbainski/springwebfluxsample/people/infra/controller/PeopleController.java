@@ -1,6 +1,5 @@
 package br.com.urbainski.springwebfluxsample.people.infra.controller;
 
-import br.com.urbainski.springwebfluxsample.people.People;
 import br.com.urbainski.springwebfluxsample.people.PeopleOperations;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,27 +18,35 @@ public class PeopleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<People> insert(@RequestBody PeopleDTO dto) {
+    public Mono<PeopleDTO> insert(@RequestBody PeopleDTO dto) {
         var people = mapper.toPeople(dto);
-        return operations.insert(people).log();
+        return operations.insert(people)
+                .map(mapper::toPeopleDTO)
+                .log();
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public Mono<People> update(@RequestBody PeopleDTO dto) {
+    public Mono<PeopleDTO> update(@RequestBody PeopleDTO dto) {
         var people = mapper.toPeople(dto);
-        return operations.update(people).log();
+        return operations.update(people)
+                .map(mapper::toPeopleDTO)
+                .log();
     }
 
     @RequestMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<People> findById(@PathVariable("id") String id) {
-        return operations.findById(id).log();
+    public Mono<PeopleDTO> findById(@PathVariable("id") String id) {
+        return operations.findById(id)
+                .map(mapper::toPeopleDTO)
+                .log();
     }
 
     @RequestMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<People> findAll() {
-        return operations.findAll().log();
+    public Flux<PeopleDTO> findAll() {
+        return operations.findAll()
+                .map(mapper::toPeopleDTO)
+                .log();
     }
 
     @DeleteMapping("/{id}")
