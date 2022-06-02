@@ -10,7 +10,7 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 @SpringBootApplication
 @OpenAPIDefinition(
 		info = @Info(
-				title = "WebFlux Pessoas API Exemplo",
+				title = "Pessoas WebFlux API Exemplo",
 				description = "Exemplo de API com Spring WebFlux e MongoDB",
 				version = "1.0"))
 public class SpringWebfluxSampleApplication {
