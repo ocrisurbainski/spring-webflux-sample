@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.constraints.AssertTrue;
+
 @Service
 @AllArgsConstructor
 public class PeopleFacade implements PeopleOperations {
@@ -12,11 +14,13 @@ public class PeopleFacade implements PeopleOperations {
     private final PeopleRepository repository;
 
     @Override
+    @AssertTrue
     public Mono<People> insert(People people) {
         return repository.insert(people);
     }
 
     @Override
+    @AssertTrue
     public Mono<People> update(People people) {
         return repository.update(people);
     }

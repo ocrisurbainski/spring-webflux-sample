@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/people")
@@ -24,9 +26,10 @@ public class PeopleController {
             @ApiResponse(responseCode = "201", description = "Pessoa salva com sucesso"),
             @ApiResponse(responseCode = "500", description = "Caso algum erro aconteca")
     })
-    public Mono<PeopleDTO> insert(@RequestBody PeopleDTO dto) {
-        var people = mapper.toPeople(dto);
-        return operations.insert(people)
+    public Mono<PeopleDTO> insert(@RequestBody @Valid Mono<PeopleDTO> dto) {
+        return dto.map(mapper::toPeople)
+                .map(operations::insert)
+                .flatMap(value -> value)
                 .map(mapper::toPeopleDTO)
                 .log();
     }
@@ -37,9 +40,10 @@ public class PeopleController {
             @ApiResponse(responseCode = "200", description = "Pessoa atualizada com sucesso"),
             @ApiResponse(responseCode = "500", description = "Caso algum erro aconteca")
     })
-    public Mono<PeopleDTO> update(@RequestBody PeopleDTO dto) {
-        var people = mapper.toPeople(dto);
-        return operations.update(people)
+    public Mono<PeopleDTO> update(@RequestBody @Valid Mono<PeopleDTO> dto) {
+        return dto.map(mapper::toPeople)
+                .map(operations::update)
+                .flatMap(value -> value)
                 .map(mapper::toPeopleDTO)
                 .log();
     }
