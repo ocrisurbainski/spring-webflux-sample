@@ -1,5 +1,6 @@
 package br.com.urbainski.springwebfluxsample.people.infra.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
@@ -17,5 +18,6 @@ public class PeopleDTO {
     @NotBlank
     private String nome;
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 }
