@@ -12,9 +12,9 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class MongoPeopleRepository implements PeopleRepository {
+public class PeopleMongoRepository implements PeopleRepository {
 
-    private final SpringPeopleRepository repository;
+    private final PeopleSpringRepository repository;
     private final PeopleMapper mapper;
 
     @Override
