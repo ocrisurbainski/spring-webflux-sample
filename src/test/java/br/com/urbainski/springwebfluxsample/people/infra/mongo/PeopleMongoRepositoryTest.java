@@ -92,12 +92,21 @@ public class PeopleMongoRepositoryTest {
                 .dataNascimento(LocalDate.now())
                 .build();
 
-        var peopleSaved = peopleMongoRepository.insert(people).block();
+        var monoSave = peopleMongoRepository.insert(people);
 
-        assertNotNull(peopleSaved);
-        assertNotNull(peopleSaved.getId());
+        final var map = new HashMap<String, String>();
 
-        var mono = peopleMongoRepository.findById(peopleSaved.getId());
+        StepVerifier.create(monoSave)
+                .assertNext(peopleSaved -> {
+                    assertNotNull(peopleSaved);
+                    assertNotNull(peopleSaved.getId());
+
+                    map.put("id", peopleSaved.getId());
+                })
+                .expectComplete()
+                .verify();
+
+        var mono = peopleMongoRepository.findById(map.get("id"));
 
         StepVerifier.create(mono)
                 .assertNext(peopleDb -> {
