@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Import;
 import reactor.test.StepVerifier;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -125,18 +126,27 @@ public class PeopleMongoRepositoryTest {
                 .dataNascimento(LocalDate.now())
                 .build();
 
-        var peopleSaved = peopleMongoRepository.insert(people).block();
+        var monoSave = peopleMongoRepository.insert(people);
 
-        assertNotNull(peopleSaved);
-        assertNotNull(peopleSaved.getId());
+        final var map = new HashMap<String, String>();
 
-        var monoDelete = peopleMongoRepository.deleteById(peopleSaved.getId());
+        StepVerifier.create(monoSave)
+                .assertNext(peopleSaved -> {
+                    assertNotNull(peopleSaved);
+                    assertNotNull(peopleSaved.getId());
+
+                    map.put("id", peopleSaved.getId());
+                })
+                .expectComplete()
+                .verify();
+
+        var monoDelete = peopleMongoRepository.deleteById(map.get("id"));
 
         StepVerifier.create(monoDelete)
                 .expectComplete()
                 .verify();
 
-        var monoFind = peopleMongoRepository.findById(peopleSaved.getId());
+        var monoFind = peopleMongoRepository.findById(map.get("id"));
 
         StepVerifier.create(monoFind)
                 .expectError(NotFoundDocumentException.class)
