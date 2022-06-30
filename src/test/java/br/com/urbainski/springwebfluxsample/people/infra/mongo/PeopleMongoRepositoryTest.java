@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.DuplicateKeyException;
 import reactor.test.StepVerifier;
 
 import java.time.LocalDate;
@@ -216,6 +217,28 @@ public class PeopleMongoRepositoryTest {
         StepVerifier.create(fluxFindAll)
                 .expectNextCount(2)
                 .expectComplete()
+                .verify();
+    }
+
+    @Test
+    public void notShouldSaveTwoPeopleWithSameCpf() {
+        var people = People.builder()
+                .nome("Fulano")
+                .cpf("77255084060")
+                .dataNascimento(LocalDate.now())
+                .build();
+
+        var monoPeople1 = peopleMongoRepository.insert(people);
+
+        StepVerifier.create(monoPeople1)
+                .assertNext(Assertions::assertNotNull)
+                .expectComplete()
+                .verify();
+
+        var monoPeople2 = peopleMongoRepository.insert(people);
+
+        StepVerifier.create(monoPeople2)
+                .expectErrorMatches(throwable -> throwable instanceof DuplicateKeyException && throwable.getMessage().contains("'E11000 duplicate key error collection: people_db.peoples index: idx_peoples_cpf_unique dup key:"))
                 .verify();
     }
 
