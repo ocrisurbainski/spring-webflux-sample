@@ -64,9 +64,21 @@ public class PeopleMongoRepositoryTest {
                 .dataNascimento(LocalDate.now())
                 .build();
 
-        var peopleSaved = peopleMongoRepository.insert(people).block();
+        var monoSave = peopleMongoRepository.insert(people);
 
-        assertNotNull(peopleSaved);
+        final var map = new HashMap<String, People>();
+
+        StepVerifier.create(monoSave)
+                .assertNext(peopleSaved -> {
+                    assertNotNull(peopleSaved);
+
+                    map.put("people", peopleSaved);
+                })
+                .expectComplete()
+                .verify();
+
+        var peopleSaved = map.get("people");
+
         assertEquals("Fulano", peopleSaved.getNome());
 
         peopleSaved.setNome("Fulano da Silva");
