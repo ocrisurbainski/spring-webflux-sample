@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cpf\": \"03272008047\",\r\n    \"nome\": \"Cristian Urbainski\",\r\n    \"dataNascimento\": \"1992-12-24\"\r\n}",
+							"raw": "{\r\n    \"cpf\": \"87150874096\",\r\n    \"nome\": \"Cristian Urbainski\",\r\n    \"dataNascimento\": \"1992-12-24\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -23,7 +23,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/people",
+							"raw": "http://localhost:8080/api/peoples",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -31,7 +31,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"people"
+								"peoples"
 							]
 						}
 					},
@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"6298bca9629a4b6710661f7d\",\r\n    \"cpf\": \"03272008047\",\r\n    \"nome\": \"Cristian Elder Urbainski\",\r\n    \"dataNascimento\": \"1992-12-24\"\r\n}",
+							"raw": "{\r\n    \"id\": \"62c3446e857e65570c9469ed\",\r\n    \"cpf\": \"87150874096\",\r\n    \"nome\": \"Cristian Elder Urbainski\",\r\n    \"dataNascimento\": \"1992-12-24\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -52,7 +52,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/people",
+							"raw": "http://localhost:8080/api/peoples",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -60,7 +60,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"people"
+								"peoples"
 							]
 						}
 					},
@@ -72,7 +72,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/people/all",
+							"raw": "http://localhost:8080/api/peoples/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -80,7 +80,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"people",
+								"peoples",
 								"all"
 							]
 						}
@@ -93,7 +93,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/people/6299029d29467e2ac57500da",
+							"raw": "http://localhost:8080/api/peoples/62c3446e857e65570c9469ed",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -101,8 +101,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"people",
-								"6299029d29467e2ac57500da"
+								"peoples",
+								"62c3446e857e65570c9469ed"
 							]
 						}
 					},
@@ -114,15 +114,16 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/people/6298bca9629a4b6710661f7e",
+							"raw": "http://localhost:8080/api/peoples/62c3446e857e65570c9469ed",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"people",
-								"6298bca9629a4b6710661f7e"
+								"api",
+								"peoples",
+								"62c3446e857e65570c9469ed"
 							]
 						}
 					},
