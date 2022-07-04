@@ -5,6 +5,8 @@ import br.com.urbainski.springwebfluxsample.people.People;
 import br.com.urbainski.springwebfluxsample.people.PeopleRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -19,12 +21,22 @@ public class PeopleMongoRepository implements PeopleRepository {
 
     @Override
     public Mono<People> insert(People people) {
-        return save(people, true);
+        return Mono.just(people)
+                .map(mapper::toPeopleDocument)
+                .flatMap(repository::save)
+                .map(mapper::toPeople)
+                .doOnSuccess(pd -> log.info("Sucesso ao cadastrar nova pessoa com o id: {}", pd.getId()))
+                .doOnError(throwable -> onErrorInsert(throwable, people));
     }
 
     @Override
     public Mono<People> update(People people) {
-        return save(people, false);
+        return Mono.just(people)
+                .map(mapper::toPeopleDocument)
+                .flatMap(repository::save)
+                .map(mapper::toPeople)
+                .doOnSuccess(pd -> log.info("Sucesso ao atualizar nova pessoa com o id: {}", pd.getId()))
+                .doOnError(throwable -> onErrorUpdate(throwable, people));
     }
 
     @Override
@@ -49,13 +61,16 @@ public class PeopleMongoRepository implements PeopleRepository {
                 .then(repository.deleteById(id));
     }
 
-    private Mono<People> save(People people, boolean isInsert) {
-        var labelAcao = isInsert ? "cadastrar" : "atualizar";
-        var peopleDocument = mapper.toPeopleDocument(people);
-        return repository.save(peopleDocument)
-                .map(mapper::toPeople)
-                .doOnSuccess(pd -> log.info("Sucesso ao {} nova pessoa com o id: {}", labelAcao, pd.getId()))
-                .doOnError(subscription -> log.error("Erro ao {} nova pessoa com o id", labelAcao, subscription.getCause()));
+    private void onErrorInsert(Throwable throwable, People people) {
+        var logMessage = "Erro ao cadastrar nova pessoa: {}, causa: {}";
+        var json = ToStringBuilder.reflectionToString(people, ToStringStyle.JSON_STYLE);
+        log.error(logMessage, json, throwable.getMessage());
+    }
+
+    private void onErrorUpdate(Throwable throwable, People people) {
+        var logMessage = "Erro ao atualizar pessoa: {}, causa: {}";
+        var json = ToStringBuilder.reflectionToString(people, ToStringStyle.JSON_STYLE);
+        log.error(logMessage, json, throwable.getMessage());
     }
 
 }

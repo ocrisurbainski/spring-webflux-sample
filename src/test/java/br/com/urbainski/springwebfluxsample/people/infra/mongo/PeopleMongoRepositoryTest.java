@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.DuplicateKeyException;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.time.LocalDate;
@@ -237,7 +238,52 @@ public class PeopleMongoRepositoryTest {
 
         var monoPeople2 = peopleMongoRepository.insert(people);
 
+        validateMonoDuplicateKey(monoPeople2);
+    }
+
+    @Test
+    public void notShouldUpdatePeopleWithSameCpf() {
+        var people1 = People.builder()
+                .nome("Fulano")
+                .cpf("77255084060")
+                .dataNascimento(LocalDate.now())
+                .build();
+
+        var monoPeople1 = peopleMongoRepository.insert(people1);
+
+        StepVerifier.create(monoPeople1)
+                .assertNext(Assertions::assertNotNull)
+                .expectComplete()
+                .verify();
+
+        var people2 = People.builder()
+                .nome("Beltrano")
+                .cpf("41649174071")
+                .dataNascimento(LocalDate.now())
+                .build();
+
+        var monoPeople2 = peopleMongoRepository.insert(people2);
+
+        final var map = new HashMap<String, People>();
+
         StepVerifier.create(monoPeople2)
+                .assertNext(peopleDb -> {
+                    assertNotNull(peopleDb);
+                    map.put("people", peopleDb);
+                })
+                .expectComplete()
+                .verify();
+
+        var peopleDb = map.get("people");
+        peopleDb.setCpf("77255084060");
+
+        var monoPeople3 = peopleMongoRepository.update(people2);
+
+        validateMonoDuplicateKey(monoPeople3);
+    }
+
+    private void validateMonoDuplicateKey(Mono<People> mono) {
+        StepVerifier.create(mono)
                 .expectErrorMatches(throwable -> throwable instanceof DuplicateKeyException && throwable.getMessage().contains("'E11000 duplicate key error collection: people_db.peoples index: idx_peoples_cpf_unique dup key:"))
                 .verify();
     }
