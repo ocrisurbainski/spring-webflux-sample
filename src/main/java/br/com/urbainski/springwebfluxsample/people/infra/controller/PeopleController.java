@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/people")
+@RequestMapping("/peoples")
 public class PeopleController {
 
     private final PeopleOperations operations;
