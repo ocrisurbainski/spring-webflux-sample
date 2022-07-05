@@ -61,7 +61,7 @@ public class PeopleController {
                 .log();
     }
 
-    @GetMapping(value = "/all", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @Operation(operationId = "findAll", description = "Método para listar todas as pessoas", responses = {
             @ApiResponse(responseCode = "200", description = "Pessoas listadas com sucesso")
     })
