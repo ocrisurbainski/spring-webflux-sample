@@ -3,6 +3,8 @@ package br.com.urbainski.springwebfluxsample.people.infra.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -13,7 +15,7 @@ public interface PeopleController {
             @ApiResponse(responseCode = "400", description = "Caso algum erro aconteça"),
             @ApiResponse(responseCode = "409", description = "Caso seja tentado inserir uma pessoa com o CPF que já existe no banco de dados"),
     })
-    Mono<PeopleDTO> insert(Mono<PeopleDTO> dto);
+    Mono<ResponseEntity<PeopleDTO>> insert(Mono<PeopleDTO> dto, UriComponentsBuilder uriComponentsBuilder);
 
     @Operation(operationId = "update", description = "Método para atualizar uma pessoa", responses = {
             @ApiResponse(responseCode = "200", description = "Pessoa atualizada com sucesso"),

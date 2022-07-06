@@ -4,7 +4,9 @@ import br.com.urbainski.springwebfluxsample.people.PeopleOperations;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -20,12 +22,19 @@ public class PeopleControllerImpl implements PeopleController {
 
     @Override
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Mono<PeopleDTO> insert(@RequestBody @Valid Mono<PeopleDTO> dto) {
+    public Mono<ResponseEntity<PeopleDTO>> insert(
+            @RequestBody @Valid Mono<PeopleDTO> dto, UriComponentsBuilder uriComponentsBuilder) {
         return dto.map(mapper::toPeople)
                 .map(operations::insert)
                 .flatMap(value -> value)
                 .map(mapper::toPeopleDTO)
+                .map(peopleDTO -> {
+                    var uri = uriComponentsBuilder
+                            .path("/peoples/{id}")
+                            .buildAndExpand(peopleDTO.getId())
+                            .toUri();
+                    return ResponseEntity.created(uri).body(peopleDTO);
+                })
                 .log();
     }
 
