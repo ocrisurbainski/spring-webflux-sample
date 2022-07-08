@@ -1,6 +1,7 @@
 package br.com.urbainski.springwebfluxsample.people.infra.controller;
 
 import br.com.urbainski.springwebfluxsample.people.PeopleOperations;
+import br.com.urbainski.springwebfluxsample.people.infra.controller.dto.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,12 +23,12 @@ public class PeopleControllerImpl implements PeopleController {
 
     @Override
     @PostMapping
-    public Mono<ResponseEntity<PeopleDTO>> insert(
-            @RequestBody @Valid Mono<PeopleDTO> dto, UriComponentsBuilder uriComponentsBuilder) {
+    public Mono<ResponseEntity<CreatePeopleResponseDTO>> insert(
+            @RequestBody @Valid Mono<CreatePeopleRequestDTO> dto, UriComponentsBuilder uriComponentsBuilder) {
         return dto.map(mapper::toPeople)
                 .map(operations::insert)
                 .flatMap(value -> value)
-                .map(mapper::toPeopleDTO)
+                .map(mapper::toCreatePeopleResponseDTO)
                 .map(peopleDTO -> {
                     var uri = uriComponentsBuilder
                             .path("/peoples/{id}")
@@ -41,28 +42,28 @@ public class PeopleControllerImpl implements PeopleController {
     @Override
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public Mono<PeopleDTO> update(@RequestBody @Valid Mono<PeopleDTO> dto) {
+    public Mono<UpdatePeopleResponseDTO> update(@RequestBody @Valid Mono<UpdatePeopleRequestDTO> dto) {
         return dto.map(mapper::toPeople)
                 .map(operations::update)
                 .flatMap(value -> value)
-                .map(mapper::toPeopleDTO)
+                .map(mapper::toUpdatePeopleResponseDTO)
                 .log();
     }
 
     @Override
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<PeopleDTO> findById(@PathVariable("id") String id) {
+    public Mono<PeopleResponseDTO> findById(@PathVariable("id") String id) {
         return operations.findById(id)
-                .map(mapper::toPeopleDTO)
+                .map(mapper::toPeopleResponseDTO)
                 .log();
     }
 
     @Override
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<PeopleDTO> findAll() {
+    public Flux<PeopleResponseDTO> findAll() {
         return operations.findAll()
-                .map(mapper::toPeopleDTO)
+                .map(mapper::toPeopleResponseDTO)
                 .log();
     }
 
