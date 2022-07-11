@@ -41,11 +41,11 @@ public interface PeopleController {
     @Operation(description = "Método para pesquisar uma pessoa pelo sue identificador")
     @ApiResponse(responseCode = "200", description = "Pessoa encontrado com sucesso")
     @ApiResponse(responseCode = "404", description = "Caso a pessoa não seja encontrada pelo seu identificador")
-    Mono<PeopleResponseDTO> findById(@Parameter(name = "id", description = "Identificador da pessoa a ser pesquisada") String id);
+    Mono<GetPeopleByIdResponseDTO> findById(@Parameter(name = "id", description = "Identificador da pessoa a ser pesquisada") String id);
 
     @Operation(operationId = "findAll", description = "Método para listar todas as pessoas")
     @ApiResponse(responseCode = "200", description = "Pessoas listadas com sucesso")
-    Flux<PeopleResponseDTO> findAll();
+    Flux<GetAllPeopleResponseDTO> findAll();
 
     @Operation(operationId = "deleteById", description = "Método para deletar uma pessoa")
     @ApiResponse(responseCode = "200", description = "Pessoa excluída com sucesso")

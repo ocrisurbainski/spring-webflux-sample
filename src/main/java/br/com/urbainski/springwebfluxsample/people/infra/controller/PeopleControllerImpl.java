@@ -53,17 +53,17 @@ public class PeopleControllerImpl implements PeopleController {
     @Override
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<PeopleResponseDTO> findById(@PathVariable("id") String id) {
+    public Mono<GetPeopleByIdResponseDTO> findById(@PathVariable("id") String id) {
         return operations.findById(id)
-                .map(mapper::toPeopleResponseDTO)
+                .map(mapper::toGetPeopleByIdResponseDTO)
                 .log();
     }
 
     @Override
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<PeopleResponseDTO> findAll() {
+    public Flux<GetAllPeopleResponseDTO> findAll() {
         return operations.findAll()
-                .map(mapper::toPeopleResponseDTO)
+                .map(mapper::toGetAllPeopleResponseDTO)
                 .log();
     }
 

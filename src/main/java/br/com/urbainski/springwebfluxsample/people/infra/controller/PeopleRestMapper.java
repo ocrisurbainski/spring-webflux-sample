@@ -7,8 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface PeopleRestMapper {
 
-    PeopleResponseDTO toPeopleResponseDTO(People people);
-
     People toPeople(CreatePeopleRequestDTO dto);
 
     CreatePeopleResponseDTO toCreatePeopleResponseDTO(People people);
@@ -16,5 +14,9 @@ public interface PeopleRestMapper {
     People toPeople(UpdatePeopleRequestDTO dto);
 
     UpdatePeopleResponseDTO toUpdatePeopleResponseDTO(People people);
+
+    GetPeopleByIdResponseDTO toGetPeopleByIdResponseDTO(People people);
+
+    GetAllPeopleResponseDTO toGetAllPeopleResponseDTO(People people);
 
 }
