@@ -4,7 +4,7 @@ import br.com.urbainski.springwebfluxsample.people.People;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface PeopleMapper {
+public interface PeopleMongoMapper {
 
     PeopleDocument toPeopleDocument(People people);
 

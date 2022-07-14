@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataMongoTest
-@Import({PeopleMongoRepository.class, PeopleMapperImpl.class})
+@Import({PeopleMongoRepository.class, PeopleMongoMapperImpl.class})
 public class PeopleMongoRepositoryTest {
 
     @Autowired

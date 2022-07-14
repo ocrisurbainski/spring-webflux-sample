@@ -5,7 +5,7 @@ import br.com.urbainski.springwebfluxsample.people.infra.controller.dto.*;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface PeopleRestMapper {
+public interface PeopleControllerMapper {
 
     People toPeople(CreatePeopleRequestDTO dto);
 

@@ -19,7 +19,7 @@ import javax.validation.Valid;
 public class PeopleControllerImpl implements PeopleController {
 
     private final PeopleOperations operations;
-    private final PeopleRestMapper mapper;
+    private final PeopleControllerMapper mapper;
 
     @Override
     @PostMapping

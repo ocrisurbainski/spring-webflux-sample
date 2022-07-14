@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 public class PeopleMongoRepository implements PeopleRepository {
 
     private final PeopleSpringRepository repository;
-    private final PeopleMapper mapper;
+    private final PeopleMongoMapper mapper;
 
     @Override
     public Mono<People> insert(People people) {
